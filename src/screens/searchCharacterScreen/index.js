@@ -1,22 +1,16 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  Dimensions,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import {ScreenDimensions} from '../../utils/commonMethods';
+import {FlatList, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import CharacterCard from '../../components/card';
-import {AXIOS_KIT} from '../../utils/api';
-import {SEARCH_CHARACTER_BY_NAME} from '../../utils/constants';
 import {useDispatch, useSelector} from 'react-redux';
+import CharacterCard from '../../components/card';
 import {
   addCharacterToFavourites,
   removeCharacterFromFavourites,
 } from '../../redux/actions';
+import {AXIOS_KIT} from '../../utils/api';
+import {ScreenDimensions} from '../../utils/commonMethods';
+import {SEARCH_CHARACTER_BY_NAME} from '../../utils/constants';
+import {appStyles} from '../../utils/commonStyles';
 
 const SearchCharacter = ({navigation}) => {
   const [searchValue, setSearchValue] = useState('');
@@ -28,12 +22,9 @@ const SearchCharacter = ({navigation}) => {
   const filteredData = searchText => {
     AXIOS_KIT('GET', SEARCH_CHARACTER_BY_NAME + searchText)
       .then(response => {
-        console.log(response, 'resp');
         setSearchedData(response.data);
       })
-      .catch(error => {
-        console.log(error, 'error');
-      });
+      .catch(error => {});
   };
 
   const isDataPresent = data => {
@@ -44,54 +35,55 @@ const SearchCharacter = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'black'}}>
+    <View style={[appStyles.flex1, appStyles.colorBlack]}>
       <View
-        style={{
-          height: ScreenDimensions.SCREEN_HEIGHT * 0.15,
-          backgroundColor: '#242424',
-          justifyContent: 'center',
-        }}>
+        style={[
+          {
+            height: ScreenDimensions.SCREEN_HEIGHT * 0.15,
+          },
+          appStyles.colorGrey,
+          appStyles.jCenter,
+        ]}>
         <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
+          style={[
+            appStyles.flex1,
+            appStyles.fRow,
+            appStyles.jSpace,
+            appStyles.aCenter,
+          ]}>
           <TextInput
             value={searchValue}
             onChangeText={val => {
               setSearchValue(val);
               filteredData(val);
             }}
-            style={{
-              flex: 0.9,
-              height: ScreenDimensions.SCREEN_HEIGHT * 0.15,
-              fontSize: 30,
-              marginLeft: 10,
-              letterSpacing: 2,
-              color: '#D7DBDD',
-            }}
+            style={[
+              {
+                height: ScreenDimensions.SCREEN_HEIGHT * 0.15,
+              },
+              appStyles.flex1Ninth,
+              appStyles.FONT30,
+              appStyles.mgL10,
+              appStyles.colorPlaceholder,
+              appStyles.lSpace2,
+            ]}
             placeholder="Search"
-            placeholderTextColor={'#D7DBDD'}
+            placeholderTextColor={appStyles.colorPlaceholder}
           />
 
           <TouchableOpacity
-            style={{
-              flex: 0.1,
-              padding: 10,
-            }}
+            style={[appStyles.flexP1, appStyles.pad10]}
             onPress={() => navigation.goBack()}>
             <Entypo name="cross" size={30} color={'#D7DBDD'} />
           </TouchableOpacity>
         </View>
       </View>
 
-      <View style={{flex: 1, margin: 10}}>
+      <View style={[appStyles.flex1, appStyles.mg10]}>
         {getSearchedData.length > 0 && searchValue.length > 0 ? (
           <FlatList
             showsVerticalScrollIndicator={false}
-            columnWrapperStyle={{justifyContent: 'space-between'}}
+            columnWrapperStyle={appStyles.jSpace}
             data={getSearchedData}
             numColumns={2}
             renderItem={({item, index}) => {
@@ -123,17 +115,22 @@ const SearchCharacter = ({navigation}) => {
             }}
           />
         ) : (
-          <View style={{marginTop: 20, marginHorizontal: 10}}>
+          <View style={[appStyles.mgT20, appStyles.mgH10]}>
             <Text
-              style={{
-                fontSize: 24,
-                color: '#18CA75',
-                letterSpacing: 1,
-                marginBottom: 8,
-              }}>
+              style={[
+                appStyles.FONT24,
+                appStyles.colorTextGreen,
+                appStyles.lSpace1,
+                appStyles.mgB5,
+              ]}>
               No character found
             </Text>
-            <Text style={{fontSize: 20, color: '#FFFFFF', letterSpacing: 2}}>
+            <Text
+              style={[
+                appStyles.FONT24,
+                appStyles.colorTextWhite,
+                appStyles.lSpace2,
+              ]}>
               Try Again
             </Text>
           </View>

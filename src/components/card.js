@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Image, Dimensions} from 'react-native';
+import React from 'react';
+import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
 
 const CharacterCard = ({
   data,
@@ -18,7 +18,6 @@ const CharacterCard = ({
           justifyContent: 'center',
           alignItems: 'center',
           width: Dimensions.get('screen').width * 0.45,
-
           minHeight: 180,
           borderWidth: 1,
         }}>

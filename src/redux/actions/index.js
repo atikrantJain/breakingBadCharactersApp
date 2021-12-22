@@ -1,10 +1,3 @@
-export const isClicked = data => {
-  return {
-    type: 'IS_CLICKED',
-    payload: data,
-  };
-};
-
 export const saveCharacterData = data => {
   return {
     type: 'SAVE_CHARACTER_DATA',

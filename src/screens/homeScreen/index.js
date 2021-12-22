@@ -1,54 +1,44 @@
-import React, {useState, useEffect} from 'react';
-import {
-  Image,
-  TouchableOpacity,
-  View,
-  FlatList,
-  Text,
-  Dimensions,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {FlatList, Image, TouchableOpacity, View} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {useDispatch, useSelector} from 'react-redux';
 import CharacterCard from '../../components/card';
 import Header from '../../components/header';
-import {AXIOS_KIT} from '../../utils/api';
-import {GET_CHARACTERS} from '../../utils/constants';
 import {
-  saveCharacterData,
   addCharacterToFavourites,
   removeCharacterFromFavourites,
+  saveCharacterData,
 } from '../../redux/actions';
+import {AXIOS_KIT} from '../../utils/api';
+import {GET_CHARACTERS} from '../../utils/constants';
+import {appStyles} from '../../utils/commonStyles';
 
 const HomeScreen = ({navigation}) => {
   const characterData = useSelector(state => state.characterData);
-
   const favouritesData = useSelector(state => state.favouritesData);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     AXIOS_KIT('GET', GET_CHARACTERS)
       .then(response => {
-        console.log(response, 'response');
         const apiData = response.data;
-        dispatch(saveCharacterData(apiData));
+        if (Array.isArray(apiData)) {
+          dispatch(saveCharacterData(apiData));
+        }
       })
-      .catch(error => {
-        console.log(error, 'error');
-      });
+      .catch(error => {});
   }, []);
 
   const iconSection = () => {
     return (
-      <View
-        style={{
-          alignItems: 'flex-end',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-        }}>
+      <View style={[appStyles.aEnd, appStyles.fRow, appStyles.jSpaceAround]}>
         <TouchableOpacity
           onPress={() => navigation.navigate('SearchCharacter')}>
-          <Fontisto name="search" style={{color: 'white'}} size={22} />
+          <Fontisto
+            name="search"
+            style={[appStyles.colorTextWhite]}
+            size={22}
+          />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('favourites')}>
           <Image
@@ -69,26 +59,18 @@ const HomeScreen = ({navigation}) => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: 'black',
-      }}>
+    <View style={[appStyles.flex1, appStyles.colorBlack]}>
       <Header
         showRightIcon={true}
         iconSection={iconSection}
-        headerStyles={{
-          marginTop: 40,
-          marginHorizontal: 15,
-          alignItems: 'center',
-        }}
+        headerStyles={[appStyles.mgT40, appStyles.mgH15, appStyles.aCenter]}
         height={60}
       />
 
-      <View style={{flex: 1, margin: 10}}>
+      <View style={[appStyles.flex1, appStyles.mg10]}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          columnWrapperStyle={{justifyContent: 'space-between'}}
+          columnWrapperStyle={[appStyles.jSpace]}
           data={characterData}
           numColumns={2}
           renderItem={({item, index}) => {
@@ -123,22 +105,5 @@ const HomeScreen = ({navigation}) => {
     </View>
   );
 };
-
-// const mapStateTopProps = state => {
-//   console.log(state, 'state');
-//   return {
-//     isClicked: state.MainReducer.isClicked,
-//   };
-// };
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     isClicked: data => {
-//       dispatch({
-//         type: 'IS_CLICKED',
-//         payload: data,
-//       });
-//     },
-//   };
-// };
 
 export default HomeScreen;

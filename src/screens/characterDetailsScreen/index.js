@@ -1,17 +1,18 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  Image,
-  ScrollView,
   FlatList,
+  Image,
+  ImageBackground,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {ScreenDimensions} from '../../utils/commonMethods';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import CharacterCard from '../../components/card';
+import {ScreenDimensions} from '../../utils/commonMethods';
+import {appStyles} from '../../utils/commonStyles';
 
 const CharacterDetails = ({navigation, route}) => {
   const {data} = route.params;
@@ -25,23 +26,23 @@ const CharacterDetails = ({navigation, route}) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      style={{backgroundColor: 'black'}}>
-      <View style={{flex: 1}}>
+      style={appStyles.colorBlack}>
+      <View style={appStyles.flex1}>
         <ImageBackground
           source={{uri: data?.img}}
-          imageStyle={{resizeMode: 'cover', opacity: 0.4}}
+          imageStyle={appStyles.imageStyle}
           style={{
             width: ScreenDimensions.SCREEN_WIDTH,
             height: ScreenDimensions.SCREEN_HEIGHT * 0.65,
           }}>
           <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: 40,
-              marginHorizontal: 15,
-              paddingVertical: 10,
-            }}>
+            style={[
+              appStyles.fRow,
+              appStyles.jSpace,
+              appStyles.mgT40,
+              appStyles.mgH15,
+              appStyles.padV10,
+            ]}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <AntDesign name="arrowleft" size={30} color={'#FFFFFF'} />
             </TouchableOpacity>
@@ -55,40 +56,31 @@ const CharacterDetails = ({navigation, route}) => {
             </TouchableOpacity>
           </View>
 
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-            }}>
-            <View
-              style={{
-                width: 240,
-                height: 300,
-              }}>
+          <View style={[appStyles.flex1, appStyles.jEnd, appStyles.aCenter]}>
+            <View style={appStyles.imageDimensions}>
               <Image
                 source={{
                   uri: data?.img,
                 }}
-                style={{
-                  width: 240,
-                  height: 300,
-                  borderRadius: 10,
-                }}
+                style={[appStyles.imageDimensions, appStyles.borderRadius10]}
               />
             </View>
-            <View style={{marginTop: 10}}>
+            <View style={appStyles.mgT10}>
               <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: 30,
-                  textAlign: 'center',
-                  fontWeight: '700',
-                }}>
+                style={[
+                  appStyles.colorTextWhite,
+                  appStyles.FONT30,
+                  appStyles.tCenter,
+                  appStyles.fW700,
+                ]}>
                 {data?.name}
               </Text>
               <Text
-                style={{color: '#FFFFFF', fontSize: 18, textAlign: 'center'}}>
+                style={[
+                  appStyles.colorTextWhite,
+                  appStyles.FONT18,
+                  appStyles.tCenter,
+                ]}>
                 {data?.nickname}
               </Text>
             </View>
@@ -96,79 +88,78 @@ const CharacterDetails = ({navigation, route}) => {
         </ImageBackground>
 
         <View
-          style={{
-            flex: 1,
-            marginVertical: 15,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: 15,
-          }}>
-          <View style={{flex: 1}}>
+          style={[
+            appStyles.fRow,
+            appStyles.jSpace,
+            appStyles.mgV15,
+            appStyles.mgH15,
+            appStyles.flex1,
+          ]}>
+          <View style={appStyles.flex1}>
             <View
-              style={{
-                marginVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                flex: 1,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text style={{color: '#18CA75', fontSize: 20}}>Portrayed</Text>
-                <Text style={{color: '#FFFFFF'}}>{data?.portrayed}</Text>
+              style={[
+                appStyles.fRow,
+                appStyles.jSpace,
+                appStyles.mgV10,
+                appStyles.flex1,
+              ]}>
+              <View style={appStyles.flex1}>
+                <Text style={[appStyles.colorTextGreen, appStyles.FONT20]}>
+                  Portrayed
+                </Text>
+                <Text style={[appStyles.colorTextWhite]}>
+                  {data?.portrayed}
+                </Text>
               </View>
 
               <View
-                style={{
-                  flexDirection: 'row',
-                  flex: 1,
-                  alignItems: 'flex-end',
-                  justifyContent: 'flex-end',
-                }}>
-                <Text style={{color: '#FFFFFF', fontSize: 16}}>
+                style={[
+                  appStyles.fRow,
+                  appStyles.jEnd,
+                  appStyles.aEnd,
+                  appStyles.flex1,
+                ]}>
+                <Text style={[appStyles.colorTextWhite, appStyles.FONT16]}>
                   {data?.birthday}
                 </Text>
                 <AntDesign
                   name="gift"
                   color={'#FFFFFF'}
                   size={16}
-                  style={{marginLeft: 10, marginBottom: 3}}
+                  style={[appStyles.mgL10, appStyles.mgB3]}
                 />
               </View>
             </View>
 
-            <View style={{marginVertical: 10}}>
-              <Text style={{color: '#18CA75', fontSize: 20}}>Occupation</Text>
+            <View style={[appStyles.mgV10]}>
+              <Text style={[appStyles.colorTextGreen, appStyles.FONT20]}>
+                Occupation
+              </Text>
               {data?.occupation?.map((ele, index) => (
-                <Text key={'new' + index} style={{color: '#FFFFFF'}}>
+                <Text key={'new' + index} style={appStyles.colorTextWhite}>
                   {ele}
                 </Text>
               ))}
             </View>
 
-            <View style={{marginVertical: 10}}>
-              <Text style={{color: '#18CA75', fontSize: 20}}>Appeared in</Text>
+            <View style={[appStyles.mgV10]}>
+              <Text style={[appStyles.colorTextGreen, appStyles.FONT20]}>
+                Appeared in
+              </Text>
 
               <FlatList
-                style={{
-                  width: ScreenDimensions.SCREEN_WIDTH * 0.9,
-                  marginVertical: 10,
-                }}
+                style={[
+                  {
+                    width: ScreenDimensions.SCREEN_WIDTH * 0.9,
+                  },
+                  appStyles.mgV10,
+                ]}
                 data={data?.appearance}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({item, index}) => (
-                  <View
-                    style={{
-                      width: 100,
-                      backgroundColor: '#242424',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginRight: 5,
-                      padding: 5,
-                    }}>
-                    <Text key={'new' + index} style={{color: '#FFFFFF'}}>
+                  <View style={appStyles.seasonBlock}>
+                    <Text key={'new' + index} style={appStyles.colorTextWhite}>
                       {`Season ${item}`}
                     </Text>
                   </View>
@@ -178,45 +169,33 @@ const CharacterDetails = ({navigation, route}) => {
           </View>
         </View>
 
-        <View
-          style={{
-            marginVertical: 40,
-            marginHorizontal: 15,
-          }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Text style={{fontSize: 26, color: '#FFFFFF'}}>
+        <View style={[appStyles.mgV40, appStyles.mgH15]}>
+          <View style={[appStyles.flex1, appStyles.fRow, appStyles.jSpace]}>
+            <Text style={[appStyles.colorTextWhite, appStyles.FONT25]}>
               Other Characters
             </Text>
 
             <TouchableOpacity
               onPress={() => navigation.navigate('Home')}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderWidth: 1,
-                borderColor: '#FFFFFF',
-                padding: 10,
-                borderRadius: 10,
-              }}>
+              style={appStyles.viewAllBtn}>
               <Text
-                style={{textAlign: 'center', fontSize: 16, color: '#FFFFFF'}}>
+                style={[
+                  appStyles.tCenter,
+                  appStyles.FONT16,
+                  appStyles.colorTextWhite,
+                ]}>
                 View all
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{flex: 1, marginVertical: 40}}>
+          <View style={[appStyles.flex1, appStyles.mgV40]}>
             <FlatList
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               data={filteredData}
               renderItem={({item, index}) => {
                 return (
-                  <View style={{marginRight: 20}}>
+                  <View style={appStyles.mgR20}>
                     <CharacterCard
                       data={item}
                       index={index}
