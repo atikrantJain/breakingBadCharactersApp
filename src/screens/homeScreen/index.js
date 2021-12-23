@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {FlatList, Image, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, Platform, TouchableOpacity, View} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {useDispatch, useSelector} from 'react-redux';
 import CharacterCard from '../../components/card';
@@ -63,7 +63,11 @@ const HomeScreen = ({navigation}) => {
       <Header
         showRightIcon={true}
         iconSection={iconSection}
-        headerStyles={[appStyles.mgT40, appStyles.mgH15, appStyles.aCenter]}
+        headerStyles={[
+          Platform.OS === 'ios' ? appStyles.mgT40 : appStyles.mgT5,
+          appStyles.mgH15,
+          appStyles.aCenter,
+        ]}
         height={60}
       />
 
