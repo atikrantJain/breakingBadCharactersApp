@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, TouchableOpacity, FlatList, Platform} from 'react-native';
 import Header from '../../components/header';
 import Entypo from 'react-native-vector-icons/Entypo';
 import CharacterCard from '../../components/card';
@@ -26,7 +26,11 @@ const Favourites = ({navigation}) => {
       <Header
         showRightIcon={true}
         iconSection={iconSection}
-        headerStyles={[appStyles.mgT40, appStyles.mgH15, appStyles.aCenter]}
+        headerStyles={[
+          Platform.OS === 'ios' ? appStyles.mgT40 : appStyles.mgT5,
+          appStyles.mgH15,
+          appStyles.aCenter,
+        ]}
         headertext="Favourites"
         height={60}
         headerTextStyles={[
